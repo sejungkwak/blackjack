@@ -168,4 +168,32 @@ def hit_or_stand(deck, hand):
             break
 
 
+def show_some(player, dealer):
+    """Display the player's cards and one of the dealer's cards
+    at the start of the game and after each time the player takes a card.
+
+    Args:
+        :player class: An instance of the Hand class
+        :dealer class: An instance of the Hand class
+    """
+    print("\nDealer's Hand:")
+    print("First card hidden!")
+    print(f"{dealer.cards[1]}")
+
+    print("\nPlayer's Hand:", *player.cards, sep="\n")
+
+
+def show_all(player, dealer):
+    """Display the player and dealer's cards at the end of the game.
+
+    Args:
+        :player class: An instance of the Hand class
+        :dealer class: An instance of the Hand class
+    """
+    print("\nDealer's Hand:", *dealer.cards, sep="\n")
+    print(f"Value of Dealer's Hand is: {dealer.value}")
+    print("\nPlayer's Hand:", *player.cards, sep="\n")
+    print(f"Value of Player's Hand is: {player.value}")
+
+
 # Result
