@@ -1,7 +1,7 @@
 import random
 
 # Visual Representation
-print("Welcome to Blackjack!")
+print("\nWelcome to Blackjack!\n")
 
 # Game Setup - Deck
 suits = ("Hearts", "Diamonds", "Spades", "Clubs")
@@ -110,7 +110,7 @@ def take_bet(chips):
 
             if chips.bet > chips.total or chips.bet <= 0:
                 raise ValueError(
-                    print(f"You have {chips.total} chips."
+                    print(f"You have {chips.total} chips. "
                       "Please bet between 1 and your chips.")
                 )
         except ValueError:
@@ -198,13 +198,13 @@ def show_all(player, dealer):
 
 # End of game scenarios
 def player_bust(chips):
-    """Display the result of the player busted and run the lost_bet method.
+    """Display the result of the player busted and run the lose_bet method.
 
     Args:
         :chips class: An instance of the Chips class
     """
-    print("PLAYER BUSTED! DEALER WINS!")
-    chips.lost_bet()
+    print("\nPLAYER BUSTED! DEALER WINS!\n")
+    chips.lose_bet()
 
 
 def player_win(chips):
@@ -213,7 +213,7 @@ def player_win(chips):
     Args:
         :chips class: An instance of the Chips class
     """
-    print("PLAYER WINS!")
+    print("\nPLAYER WINS!\n")
     chips.win_bet()
 
 
@@ -223,21 +223,101 @@ def dealer_bust(chips):
     Args:
         :chips class: An instance of the Chips class
     """
-    print("DEALER BUSTED! PLAYER WINS!")
+    print("\nDEALER BUSTED! PLAYER WINS!\n")
     chips.win_bet()
 
 
 def dealer_win(chips):
-    """Display the result of the dealer winning and run the lost_bet method.
+    """Display the result of the dealer winning and run the lose_bet method.
 
     Args:
         :chips class: An instance of the Chips class
     """
-    print("DEALER WINS!")
-    chips.lost_bet()
+    print("\nDEALER WINS!\n")
+    chips.lose_bet()
 
 
 def push():
     """Display the result of a tie.
     """
-    print("DEALER and PLAYER TIE! PUSH!")
+    print("\nDEALER and PLAYER TIE! PUSH!\n")
+
+
+# Set up the Player's chips
+player_chips = Chips()
+
+# Game loop
+while playing:
+    # Print an opening statement
+    print("Get as close to 21 as you can without going over!\n"
+          "Dealer hits until they reach 17. Aces count as 1 or 11.\n"
+          f"You have {player_chips.total} chips.")
+
+    # Create & shuffle the deck, deal two cards to each player
+    deck = Deck()
+    deck.shuffle()
+
+    player_hand = Hand()
+    dealer_hand = Hand()
+
+    for i in range(2):
+        player_hand.add_card(deck.deal())
+        dealer_hand.add_card(deck.deal())
+
+    # Prompt the Player for their bet
+    take_bet(player_chips)
+
+    # Show cards (but keep one dealer card hidden)
+    show_some(player_hand, dealer_hand)
+
+    while playing:
+
+        # Prompt for Player to Hit or Stand
+        hit_or_stand(deck, player_hand)
+
+        # Show cards (but keep one dealer card hidden)
+        show_some(player_hand, dealer_hand)
+
+        if player_hand.value > 21:
+            player_bust(player_chips)
+            break
+
+    # If Player hasn't busted, play Dealer's hand until Dealer reaches 17
+    if player_hand.value <= 21:
+        while dealer_hand.value < 17:
+            hit(deck, dealer_hand)
+
+        # Show all cards
+        show_all(player_hand, dealer_hand)
+
+        # Run different winning scenarios
+        if dealer_hand.value > 21:
+            dealer_bust(player_chips)
+        elif player_hand.value > dealer_hand.value:
+            player_win(player_chips)
+        elif player_hand.value < dealer_hand.value:
+            dealer_win(player_chips)
+        else:
+            push()
+
+    # Inform Player of their chips total
+    print(f"Your chips are at {player_chips.total}")
+
+    # Ask to play again
+    while True:
+        try:
+            play_again = input("Do you want to play again?\n"
+                               "Enter [Y] for yes or [N] for no.\n").upper()
+            if not (play_again == "Y" or play_again == "N"):
+                raise ValueError(
+                    print(f"You have entered {play_again}")
+                )
+            if play_again == "Y":
+                playing = True
+            elif play_again == "N":
+                print("Thank you for playing!")
+                playing = False
+        except ValueError as val_e:
+            print(f"Invalid input: {val_e}")
+        else:
+            break
