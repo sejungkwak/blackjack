@@ -146,7 +146,7 @@ def hit_or_stand(deck, hand):
 
     while True:
         try:
-            answer = input("Would you like to HIT or STAND? "
+            answer = input("\nWould you like to HIT or STAND? "
                            "Enter [H] to hit or [S] to stand.\n").upper()
 
             if not (answer[0] == "H" or answer[0] == "S"):
@@ -196,4 +196,48 @@ def show_all(player, dealer):
     print(f"Value of Player's Hand is: {player.value}")
 
 
-# Result
+# End of game scenarios
+def player_bust(chips):
+    """Display the result of the player busted and run the lost_bet method.
+
+    Args:
+        :chips class: An instance of the Chips class
+    """
+    print("PLAYER BUSTED! DEALER WINS!")
+    chips.lost_bet()
+
+
+def player_win(chips):
+    """Display the result of the player winning and run the win_bet method.
+
+    Args:
+        :chips class: An instance of the Chips class
+    """
+    print("PLAYER WINS!")
+    chips.win_bet()
+
+
+def dealer_bust(chips):
+    """Display the result of the dealer busted and run the win_bet method.
+
+    Args:
+        :chips class: An instance of the Chips class
+    """
+    print("DEALER BUSTED! PLAYER WINS!")
+    chips.win_bet()
+
+
+def dealer_win(chips):
+    """Display the result of the dealer winning and run the lost_bet method.
+
+    Args:
+        :chips class: An instance of the Chips class
+    """
+    print("DEALER WINS!")
+    chips.lost_bet()
+
+
+def push():
+    """Display the result of a tie.
+    """
+    print("DEALER and PLAYER TIE! PUSH!")
