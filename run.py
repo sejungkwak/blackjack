@@ -76,6 +76,21 @@ class Hand:
             self.aces -= 1
 
 
+class Chips:
+    """Track a player's chaips, bets and winnings.
+    """
+
+    def __init__(self):
+        self.total = 100
+        self.bet = 0
+
+    def win_bet(self):
+        self.total += self.bet
+
+    def lose_bet(self):
+        self.total -= self.bet
+
+
 # User Input - Betting
 
 # Game Play
