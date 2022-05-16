@@ -11,6 +11,8 @@ values = {"Two": 2, "Three": 3, "Four": 4, "Five": 5,
           "Six": 6, "Seven": 7, "Eight": 8, "Nine": 9, "Ten": 10,
           "Jack": 10, "Queen": 10, "King": 10, "Ace": 11}
 
+playing = True
+
 
 class Card:
     """Represent a single playing card and initialised by passing suit and rank.
@@ -116,6 +118,54 @@ def take_bet(chips):
         else:
             break
 
+
 # Game Play
+def hit(deck, hand):
+    """Add one card from the deck to a player's hand
+
+    Args:
+        :deck class: An instance of the Deck class
+        :hand class: An instance of the Hand class
+    """
+    hand.add_card(deck.deal())
+    hand.adjust_for_ace()
+
+
+# User Input - Hit or Stand
+def hit_or_stand(deck, hand):
+    """Get the player's decision
+
+    Args:
+        :deck class: An instance of the Deck class
+        :hand class: An instance of the Hand class
+
+    Raises:
+        ValueError: If the user enters a character other than H or S.
+    """
+    global playing
+
+    while True:
+        try:
+            answer = input("Would you like to HIT or STAND? "
+                           "Enter [H] to hit or [S] to stand.\n").upper()
+
+            if not (answer[0] == "H" or answer[0] == "S"):
+                raise ValueError(
+                    print(f"You have entered {answer}. "
+                      "Please enter [H] or [S].")
+                )
+
+            if answer[0] == "H":
+                hit(deck, hand)
+            elif answer[0] == "S":
+                print("Player stands. Dealer is playing.")
+                playing = False
+
+        except ValueError as val_e:
+            print(f"Invalid input: {val_e}")
+
+        else:
+            break
+
 
 # Result
