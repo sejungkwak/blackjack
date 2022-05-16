@@ -28,6 +28,30 @@ class Card:
         return f"{self.rank} of {self.suit}"
 
 
+class Deck:
+    """Represent a deck of playing cards in order.
+    """
+
+    def __init__(self):
+        self.deck = []
+        for suit in suits:
+            for rank in ranks:
+                card = Card(suit, rank)
+                self.deck.append(card)
+
+    def __str__(self):
+        cards = ""
+        for card in self.deck:
+            cards += f"{card}\n"
+        return f"{cards}"
+
+    def shuffle(self):
+        random.shuffle(self.deck)
+
+    def deal(self):
+        return self.deck.pop()
+
+
 # User Input - Betting
 
 # Game Play
