@@ -92,6 +92,29 @@ class Chips:
 
 
 # User Input - Betting
+def take_bet(chips):
+    """Get the bet amount from the user
+
+    Args:
+        :chips class: An instance of the Chips class
+
+    Raises:
+        ValueError: If the bet is greater than the total or less than 1,
+                    or the input value cannot be converted into int.
+    """
+    while True:
+        try:
+            chips.bet = int(input("How many chips would you like to bet?\n"))
+
+            if chips.bet > chips.total or chips.bet <= 0:
+                raise ValueError(
+                    print(f"You have {chips.total} chips."
+                      "Please bet between 1 and your chips.")
+                )
+        except ValueError:
+            print("Please try again.\n")
+        else:
+            break
 
 # Game Play
 
