@@ -12,6 +12,22 @@ values = {"Two": 2, "Three": 3, "Four": 4, "Five": 5,
           "Jack": 10, "Queen": 10, "King": 10, "Ace": 11}
 
 
+class Card:
+    """Represent a single playing card and initialised by passing suit and rank.
+
+    Args:
+        :suit str: one of the 4 categories
+        :rank str: one of the 13 ranks
+    """
+
+    def __init__(self, suit, rank):
+        self.suit = suit
+        self.rank = rank
+
+    def __str__(self):
+        return f"{self.rank} of {self.suit}"
+
+
 # User Input - Betting
 
 # Game Play
